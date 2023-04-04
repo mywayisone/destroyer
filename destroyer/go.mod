@@ -1,4 +1,4 @@
-module github.com/mywayisone/gRPC-project
+module github.com/mywayisone/gRPC-project/destroyer
 
 go 1.19
 
