@@ -6,25 +6,28 @@ import (
 	"net"
 	"time"
 
-	"github.com/mywayisone/destroyer/internal/api/pb"
+	"github.com/golang/protobuf/ptypes/empty"
+	"github.com/mywayisone/gRPC-project/destroyer/api/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // Server represents the gRPC server
-type Server struct{}
+type Server struct{
+	 pb.UnimplementedDestroyerServer
+}
 
 // AcquireTargets is a gRPC method that acquires targets
-func (s *Server) AcquireTargets(ctx context.Context, req *pb.TargetsRequest) (*pb.Empty, error) {
+func (s *Server) AcquireTargets(ctx context.Context, req *pb.TargetsRequest) (*empty.Empty, error) {
 	for _, target := range req.Targets {
 		log.Printf("Acquiring target: ID=%s, Message=%s, CreatedOn=%v", target.Id, target.Message, target.CreatedOn.AsTime())
 		// Add code to acquire targets here
 	}
-	return &pb.Empty{}, nil
+	return &empty.Empty{}, nil
 }
 
 // ListTargets is a gRPC method that lists targets acquired from the database
-func (s *Server) ListTargets(ctx context.Context, req *pb.Empty) (*pb.TargetsResponse, error) {
+func (s *Server) ListTargets(ctx context.Context, req *empty.Empty) (*pb.TargetsResponse, error) {
 	log.Println("Listing targets")
 	// Add code to list targets from the database here
 	return &pb.TargetsResponse{}, nil
