@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option go_package="github.com/mywayisone/destroyer/internal/api/pb";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+package destroyer;
+
+
+service Destroyer {
+  // RPC method that acquires targets
+  rpc AcquireTargets (TargetsRequest) returns (google.protobuf.Empty) {}
+
+  // RPC method that lists targets acquired from the database
+  rpc ListTargets (google.protobuf.Empty) returns (TargetsResponse) {}
+}
+
+message TargetsRequest {
+  // The list of targets to be acquired
+  repeated Target targets = 1;
+}
+
+message Target {
+  // The ID of the target
+  string id = 1;
+
+  // The message to send
+  string message = 2;
+
+  // The creation time of the target
+  google.protobuf.Timestamp created_on = 3;
+}
+
+message TargetsResponse {
+  // The list of targets acquired from the database
+  repeated Target targets = 1;
+}
